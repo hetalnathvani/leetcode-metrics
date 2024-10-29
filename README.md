@@ -8,4 +8,4 @@ Tech stack used :
 
 # Demo
 
-[![Watch the video](https://img.youtube.com/vi/%3CVIDEO%20ID%3E/hqdefault.jpg)](https://www.awesomescreenshot.com/video/33060082?key=bda54faf76a33d01acb7eaff86237cba)
+[leetcode_metrics_demo.webm](https://github.com/user-attachments/assets/f5a98dfa-9d5c-4436-9c28-dd600a89ca73)
