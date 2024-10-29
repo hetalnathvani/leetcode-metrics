@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
       searchButton.textContent = "Searching...";
       searchButton.disabled = true;
 
-      const targetUrl = `https://leetcode-stats-api.herokuapp.com/${username}`;
-
+      const targetUrl = `https://alfa-leetcode-api.onrender.com/userProfile/${username}`;
       const myHeaders = new Headers();
       myHeaders.append("content-type", "application/json");
 
@@ -40,13 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
         variables: { username: `${username}` },
       });
       const requestOptions = {
-        method: "POST",
+        method: "GET",
         headers: myHeaders,
         body: graphql,
       };
 
-      const response = await fetch(targetUrl, requestOptions);
-      if (!response.ok) {
+      const response = await fetch(targetUrl);
+
+      if (!response) {
         throw new Error("Unable to fetch the User details");
       }
       const parsedData = await response.json();
@@ -68,19 +68,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayUserData(parsedData) {
-    const totalQues = parsedData.data.allQuestionsCount[0].count;
-    const totalEasyQues = parsedData.data.allQuestionsCount[1].count;
-    const totalMediumQues = parsedData.data.allQuestionsCount[2].count;
-    const totalHardQues = parsedData.data.allQuestionsCount[3].count;
+    console.log(parsedData);
 
-    const solvedTotalQues =
-      parsedData.data.matchedUser.submitStats.acSubmissionNum[0].count;
-    const solvedTotalEasyQues =
-      parsedData.data.matchedUser.submitStats.acSubmissionNum[1].count;
-    const solvedTotalMediumQues =
-      parsedData.data.matchedUser.submitStats.acSubmissionNum[2].count;
-    const solvedTotalHardQues =
-      parsedData.data.matchedUser.submitStats.acSubmissionNum[3].count;
+    const totalQues = parsedData.totalQuestions;
+    const totalEasyQues = parsedData.totalEasy;
+    const totalMediumQues = parsedData.totalMedium;
+    const totalHardQues = parsedData.totalHard;
+
+    const solvedTotalQues = parsedData.totalSolved;
+    const solvedTotalEasyQues = parsedData.easySolved;
+    const solvedTotalMediumQues = parsedData.mediumSolved;
+    const solvedTotalHardQues = parsedData.hardSolved;
 
     updateProgress(
       solvedTotalEasyQues,
@@ -104,27 +102,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const cardsData = [
       {
         label: "Overall Submissions",
-        value:
-          parsedData.data.matchedUser.submitStats.totalSubmissionNum[0]
-            .submissions,
+        value: parsedData.totalSubmissions[0].submissions,
       },
       {
         label: "Overall Easy Submissions",
-        value:
-          parsedData.data.matchedUser.submitStats.totalSubmissionNum[1]
-            .submissions,
+        value: parsedData.totalSubmissions[1].submissions,
       },
       {
         label: "Overall Medium Submissions",
-        value:
-          parsedData.data.matchedUser.submitStats.totalSubmissionNum[2]
-            .submissions,
+        value: parsedData.totalSubmissions[2].submissions,
       },
       {
         label: "Overall Hard Submissions",
-        value:
-          parsedData.data.matchedUser.submitStats.totalSubmissionNum[3]
-            .submissions,
+        value: parsedData.totalSubmissions[3].submissions,
       },
     ];
 
